@@ -1,22 +1,24 @@
 //
-//  SwiftUIView.swift
-//  
+//  CustomToastView.swift
+//  PriceBDApp
 //
-//  Created by Joynal Abedin on 22/12/23.
+//  Created by Joynal Abedin on 7/11/23.
 //
 
 import SwiftUI
 
-@available(iOS 13.0, *)
+//MARK: - Custom Toast View
+@available(iOS 14.0, *)
 public struct ToastView: View {
     
-    public init(){}
-    
     public var body: some View {
-        Text("Hello, World! Toast view")
+        ZStack {
+            Text("Hello world toast")
+                .font(.poppins(.bold, size: 18))
+        }
+        .onAppear {
+            PoppinsFont.registerFonts()
+        }
     }
 }
 
-//#Preview {
-//    ToastView()
-//}
