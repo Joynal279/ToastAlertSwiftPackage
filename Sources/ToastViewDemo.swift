@@ -9,7 +9,7 @@ import SwiftUI
 
 //MARK: - Custom Toast View
 @available(iOS 14.0, *)
-public struct ToastView: View {
+public struct ToastViewDemo: View {
     
     public init(){}
     
