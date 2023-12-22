@@ -11,6 +11,8 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct ToastViewDemo: View {
     
+    @State var toast: ToastView? = nil
+    
     public init(){
         PoppinsFont.registerFonts()
     }
@@ -19,7 +21,11 @@ public struct ToastViewDemo: View {
         ZStack {
             Text("Hello world toast")
                 .font(.poppins(.bold, size: 18))
+                .onTapGesture {
+                    toast = ToastView(type: .success, title: "Success", message: "This is success message", duration: 3.0)
+                }
         }
+        .toastView(toast: $toast)
         .onAppear {
             
         }
