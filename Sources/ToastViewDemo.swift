@@ -11,7 +11,9 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct ToastViewDemo: View {
     
-    public init(){}
+    public init(){
+        PoppinsFont.registerFonts()
+    }
     
     public var body: some View {
         ZStack {
@@ -19,7 +21,7 @@ public struct ToastViewDemo: View {
                 .font(.poppins(.bold, size: 18))
         }
         .onAppear {
-            PoppinsFont.registerFonts()
+            
         }
     }
 }
