@@ -8,6 +8,9 @@
 import SwiftUI
 
 public struct ToastView: View {
+    
+    public init(){}
+    
     public var body: some View {
         Text("Hello, World! Toast view")
     }
