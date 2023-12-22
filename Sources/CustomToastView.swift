@@ -15,7 +15,14 @@ struct CustomToastView: View {
     var toastType: CustomToastStyle
     var toastTitle: String
     var toastMessage: String
-    var onCancelTapped: (() -> Void)
+    //var onCancelTapped: (() -> Void)
+    
+    public init(toastType: CustomToastStyle, toastTitle: String, toastMessage: String){
+        self.toastType = toastType
+        self.toastTitle = toastTitle
+        self.toastMessage = toastMessage
+        PoppinsFont.registerFonts()
+    }
     
     @available(iOS 14.0, *)
     public var body: some View {
@@ -41,7 +48,7 @@ struct CustomToastView: View {
                 Spacer(minLength: 10)
                 
                 Button { /// dismiss button
-                    onCancelTapped()
+                    //onCancelTapped()
                 } label: {
                     Image(systemName: "xmark")
                         .foregroundColor(.black)
@@ -135,9 +142,7 @@ struct CustomToastModifier: ViewModifier {
                 CustomToastView(
                     toastType: toast.type,
                     toastTitle: toast.title,
-                    toastMessage: toast.message) {
-                        dismissToast()
-                    }
+                    toastMessage: toast.message)
             }
             .transition(.move(edge: .bottom))
         }
@@ -178,17 +183,17 @@ extension View {
     }
 }
 
-//MARK: - Preview
-@available(iOS 14.0, *)
-#Preview {
-    VStack {
-        CustomToastView(toastType: .error, toastTitle: "Error", toastMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ") {}
-        
-        CustomToastView(toastType: .info, toastTitle: "Info", toastMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ") {}
-        CustomToastView(toastType: .success, toastTitle: "Success", toastMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ") {}
-        CustomToastView(toastType: .warning, toastTitle: "Warning", toastMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ") {}
-    }
-}
+////MARK: - Preview
+//@available(iOS 14.0, *)
+//#Preview {
+//    VStack {
+//        CustomToastView(toastType: .error, toastTitle: "Error", toastMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ") {}
+//        
+//        CustomToastView(toastType: .info, toastTitle: "Info", toastMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ") {}
+//        CustomToastView(toastType: .success, toastTitle: "Success", toastMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ") {}
+//        CustomToastView(toastType: .warning, toastTitle: "Warning", toastMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ") {}
+//    }
+//}
 
 //MARK: - BackgroundBlurView
 struct BackgroundBlurView: UIViewRepresentable {

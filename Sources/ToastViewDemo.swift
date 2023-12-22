@@ -13,10 +13,6 @@ public struct ToastViewDemo: View {
     
     @State var toast: ToastView? = nil
     
-    public init(){
-        PoppinsFont.registerFonts()
-    }
-    
     public var body: some View {
         ZStack {
             Text("Hello world toast")
