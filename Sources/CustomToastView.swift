@@ -20,18 +20,23 @@ public struct CustomToastView: View {
     @available(iOS 14.0, *)
     public var body: some View {
         VStack(alignment: .leading) {
-            HStack(alignment: .top) {
+            HStack(alignment: toastTitle.isEmpty || toastMessage.isEmpty ? .center : .top) {
                 Image(systemName: toastType.iconFileName)
                     .foregroundColor(toastType.themeColor)
                 
-                VStack(alignment: .leading, spacing: .init(height: 5)) {
+                VStack(alignment: .leading, spacing: .init(height: toastTitle.isEmpty || toastMessage.isEmpty ? 0 : 5)) {
                     
-                    Text(toastTitle)
-                        .textVM(multiTextAlignment: .leading, font: .poppins(.semiBold, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
+                    if !toastTitle.isEmpty {
+                        Text(toastTitle)
+                            .lineLimit(1)
+                            .textVM(multiTextAlignment: .leading, font: .poppins(.semiBold, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
+                    }
                     
-                    Text(toastMessage)
-                        .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: .init(height: 14)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
-                        .lineLimit(4)
+                    if !toastMessage.isEmpty {
+                        Text(toastMessage)
+                            .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: .init(height: 14)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
+                            .lineLimit(2)
+                    }
                     
                 }//: end VStack
                 
