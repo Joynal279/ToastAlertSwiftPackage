@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import Combine
-import SwiftUI
 
 /// Alert type
 public enum AlertType {
@@ -101,7 +99,7 @@ public struct CustomAlert: View {
                 // alert title
                 Text(alertType.title())
                     .lineLimit(1)
-                    .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 18)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
+                    .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 18)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
                     .frame(height: .init(height: 25))
                     .padding(.top, .init(height: 16))
                     .padding(.bottom, .init(height: 8))
@@ -110,7 +108,7 @@ public struct CustomAlert: View {
                 // alert message
                 Text(alertType.message())
                     .lineLimit(4)
-                    .textVM(multiTextAlignment: .center, font: .poppins(.regular, size: .init(height: 14)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
+                    .textVM(multiTextAlignment: .center, font: .poppins(.regular, size: .init(height: 14)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .padding(.horizontal, .init(width: 16))
                     .padding(.bottom, .init(height: 16))
@@ -165,7 +163,7 @@ public struct CustomAlert: View {
             }
             .frame(width: .init(width: 349), height: alertType.height())
             .background(
-                colorScheme == .light ? Color.white : Color(hexString: "#232323")
+                colorScheme == .light ? Color(hexString: "#F2F2F2") : Color(hexString: "#232323")
             )
             .cornerRadius(.init(height: 10))
         }
