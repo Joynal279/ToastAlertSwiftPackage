@@ -58,9 +58,9 @@ public enum AlertType {
     func height() -> CGFloat {
         switch self {
         case .oneButton:
-            return 150
+            return .init(height: 150)
         case .twoButton:
-            return 150
+            return .init(height: 150)
         }
     }
     
@@ -70,6 +70,7 @@ public enum AlertType {
 @available(iOS 14.0, *)
 public struct CustomAlert: View {
     
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     /// Flag used to dismiss the alert on the presenting view
     @Binding var presentAlert: Bool
     
@@ -99,22 +100,18 @@ public struct CustomAlert: View {
                 
                 // alert title
                 Text(alertType.title())
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                    .frame(height: 25)
-                    .padding(.top, 16)
-                    .padding(.bottom, 8)
-                    .padding(.horizontal, 16)
+                    .textVM(multiTextAlignment: .center, font: .poppins(.semiBold, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
+                    .frame(height: .init(height: 25))
+                    .padding(.top, .init(height: 16))
+                    .padding(.bottom, .init(height: 8))
+                    .padding(.horizontal, .init(width: 16))
                 
                 // alert message
                 Text(alertType.message())
+                    .textVM(multiTextAlignment: .center, font: .poppins(.regular, size: .init(height: 14)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                    .font(.system(size: 14))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 16)
+                    .padding(.horizontal, .init(width: 16))
+                    .padding(.bottom, .init(height: 16))
                     .minimumScaleFactor(0.5)
                 
                 Divider()
@@ -130,9 +127,7 @@ public struct CustomAlert: View {
                             leftButtonAction?()
                         } label: {
                             Text(alertType.leftActionText)
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.black)
-                                .multilineTextAlignment(.center)
+                                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.blue : Color.blue)
                                 .padding()
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         }
@@ -143,9 +138,7 @@ public struct CustomAlert: View {
                             leftButtonAction?()
                         } label: {
                             Text(alertType.leftActionText)
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.black)
-                                .multilineTextAlignment(.center)
+                                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
                                 .padding()
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         }
@@ -157,24 +150,22 @@ public struct CustomAlert: View {
                             rightButtonAction?()
                         } label: {
                             Text(alertType.rightActionText)
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.pink)
-                                .multilineTextAlignment(.center)
-                                .padding(15)
+                                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.blue : Color.blue)
+                                .padding(.init(height: 15))
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         }
                     }
                     
                 }
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 55)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .init(height: 55))
                 .padding([.horizontal, .bottom], 0)
                 
             }
-            .frame(width: 270, height: alertType.height())
+            .frame(width: .init(height: 270), height: alertType.height())
             .background(
-                Color.white
+                BackgroundBlurView()
             )
-            .cornerRadius(4)
+            .cornerRadius(.init(height: 10))
         }
         .zIndex(2)
     }
