@@ -76,15 +76,15 @@ struct CustomToastView: View {
 @available(iOS 14.0, *)
 public struct ToastView: Equatable {
     var type: CustomToastStyle
-    var title: String
-    var message: String
-    var duration: Double = 3
-    var yOffset: Double = -30
+    public var title: String
+    public var message: String
+    public var duration: Double = 3
+    public var yOffset: Double = -30
 }
 
 //MARK: - Enum
 @available(iOS 14.0, *)
-enum CustomToastStyle {
+public enum CustomToastStyle {
     case error
     case warning
     case success
