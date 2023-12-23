@@ -67,7 +67,7 @@ public struct CustomToastView: View {
 
 //MARK: - Enum Model
 @available(iOS 14.0, *)
-struct ToastView: Equatable {
+public struct ToastView: Equatable {
     var type: CustomToastStyle
     var title: String
     var message: String
@@ -178,7 +178,7 @@ struct CustomToastModifier: ViewModifier {
 
 //MARK: - View Extension
 @available(iOS 14.0, *)
-extension View {
+public extension View {
     func toastView(toast: Binding<ToastView?>) -> some View {
         self.modifier(CustomToastModifier(toast: toast))
     }
