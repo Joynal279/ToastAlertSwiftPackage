@@ -96,11 +96,11 @@ public struct CustomAlert: View {
             // faded background
             Color.black.opacity(0.75)
                 .edgesIgnoringSafeArea(.all)
-            VStack(spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 
                 // alert title
                 Text(alertType.title())
-                    .lineLimit(2)
+                    .lineLimit(1)
                     .textVM(multiTextAlignment: .center, font: .poppins(.semiBold, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
                     .frame(height: .init(height: 25))
                     .padding(.top, .init(height: 16))
@@ -163,7 +163,7 @@ public struct CustomAlert: View {
                 .padding([.horizontal, .bottom], 0)
                 
             }
-            //.frame(width: .init(height: 270), height: alertType.height())
+            .frame(width: .init(width: 270))
             .background(
                 colorScheme == .light ? Color.white : Color.black
             )
