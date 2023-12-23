@@ -39,9 +39,9 @@ public enum AlertType {
     var leftActionText: String {
         switch self {
         case .oneButton:
-            return "OK"
+            return "Ok"
         case .twoButton:
-            return "Cancel"
+            return "No"
         }
     }
     
@@ -51,16 +51,16 @@ public enum AlertType {
         case .oneButton:
             return "OK"
         case .twoButton:
-            return "Yes"
+            return "Ok"
         }
     }
     
     func height() -> CGFloat {
         switch self {
         case .oneButton:
-            return .init(height: 150)
+            return .init(height: 197)
         case .twoButton:
-            return .init(height: 150)
+            return .init(height: 197)
         }
     }
     
@@ -101,7 +101,7 @@ public struct CustomAlert: View {
                 // alert title
                 Text(alertType.title())
                     .lineLimit(1)
-                    .textVM(multiTextAlignment: .center, font: .poppins(.semiBold, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
+                    .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 18)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
                     .frame(height: .init(height: 25))
                     .padding(.top, .init(height: 16))
                     .padding(.bottom, .init(height: 8))
@@ -129,7 +129,7 @@ public struct CustomAlert: View {
                             leftButtonAction?()
                         } label: {
                             Text(alertType.leftActionText)
-                                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.blue : Color.blue)
+                                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 18)), foregroundStyle: Color(hexString: "#007AFF"))
                                 .padding()
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         }
@@ -140,7 +140,7 @@ public struct CustomAlert: View {
                             leftButtonAction?()
                         } label: {
                             Text(alertType.leftActionText)
-                                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
+                                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 18)), foregroundStyle: Color(hexString: "#F14B4B"))
                                 .padding()
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         }
@@ -152,20 +152,20 @@ public struct CustomAlert: View {
                             rightButtonAction?()
                         } label: {
                             Text(alertType.rightActionText)
-                                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.blue : Color.blue)
+                                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 18)), foregroundStyle: Color(hexString: "#007AFF"))
                                 .padding(.init(height: 15))
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         }
                     }
                     
                 }
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .init(height: 55))
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .init(height: 53))
                 .padding([.horizontal, .bottom], 0)
                 
             }
-            .frame(width: .init(width: 270))
+            .frame(width: .init(width: 349), height: alertType.height())
             .background(
-                colorScheme == .light ? Color.white : Color.black
+                colorScheme == .light ? Color.white : Color(hexString: "#232323")
             )
             .cornerRadius(.init(height: 10))
         }
