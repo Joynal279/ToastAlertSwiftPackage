@@ -6,241 +6,199 @@
 //
 
 import SwiftUI
+import Combine
+import SwiftUI
 
-//MARK: - CustomAlertView
-@available(iOS 14.0, *)
-struct CustomAlertView: View {
+/// Alert type
+public enum AlertType {
     
-    let bgColor: Color
-    let fontColor: Color
-    let title: String
-    let message: String
-    let dismissButton: CustomAlertButton?
-    let primaryButton: CustomAlertButton?
-    let secondaryButton: CustomAlertButton?
+    case success
+    case error(title: String, message: String = "")
     
-    @Environment(\.presentationMode) private var dismiss
-    
-    var body: some View {
-        ZStack {
-            alertView
+    func title() -> String {
+        switch self {
+        case .success:
+            return "Success"
+        case .error(title: let title, _):
+            return title
         }
-        .ignoresSafeArea()
     }
-    
-    // MARK: Private
-    private var alertView: some View {
-        VStack(spacing: .init(height: 20)) {
-            titleView
-            messageView
-            buttonsView
-        }
-        .padding(.init(height: 24))
-        .frame(width: .init(width: 320))
-        .background(Color.white)
-        .cornerRadius(.init(height: 12))
-        .shadow(color: Color.black.opacity(0.2), radius: 16, x: 0, y: 12)
-    }
-    
-    @ViewBuilder
-    private var titleView: some View {
-        if !title.isEmpty {
-            Text(title)
-                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 18)), foregroundStyle: Color.black)
-                .frame(maxWidth: .infinity, alignment: .center)
+
+    func message() -> String {
+        switch self {
+        case .success:
+            return "Please confirm that you're still open to session requests"
+        case .error(_, message: let message):
+            return message
         }
     }
     
-    @ViewBuilder
-    private var messageView: some View {
-        if !message.isEmpty {
-            Text(message)
-                .textVM(multiTextAlignment: .center, font: .poppins(.regular, size: .init(height: 16)), foregroundStyle: Color.gray)
-                .lineSpacing(3)
-                .frame(maxWidth: .infinity, alignment: .center)
+    /// Left button action text for the alert view
+    var leftActionText: String {
+        switch self {
+        case .success:
+            return "Go"
+        case .error(_, _):
+            return "Go"
         }
     }
     
-    private var buttonsView: some View {
-        HStack(spacing: 12) {
-            if dismissButton != nil {
-                dismissButtonView
-                
-            } else if primaryButton != nil, secondaryButton != nil {
-                secondaryButtonView
-                primaryButtonView
-            }
-        }
-        .padding(.top, .init(height: 10))
-    }
-    
-    @ViewBuilder
-    private var primaryButtonView: some View {
-        if let button = primaryButton {
-            CustomAlertButton(bgColor: button.bgColor, fontColor: button.fontColor, title: button.title) {
-                button.action?()
-                dismiss.wrappedValue.dismiss()
-            }
+    /// Right button action text for the alert view
+    var rightActionText: String {
+        switch self {
+        case .success:
+            return "Cancel"
+        case .error(_, _):
+            return "Cancel"
         }
     }
     
-    @ViewBuilder
-    private var secondaryButtonView: some View {
-        if let button = secondaryButton {
-            CustomAlertButton(bgColor: button.bgColor, fontColor: button.fontColor, title: button.title) {
-                button.action?()
-                dismiss.wrappedValue.dismiss()
-            }
+    func height(isShowVerticalButtons: Bool = false) -> CGFloat {
+        switch self {
+        case .success:
+            return isShowVerticalButtons ? 220 : 150
+        case .error(_, _):
+            return isShowVerticalButtons ? 220 : 150
         }
     }
-    
-    @ViewBuilder
-    private var dismissButtonView: some View {
-        if let button = dismissButton {
-            CustomAlertButton(bgColor: button.bgColor, fontColor: button.fontColor, title: button.title) {
-                button.action?()
-                dismiss.wrappedValue.dismiss()
-            }
-        }
-    }
-    
 }
 
-
-//MARK: - CustomAlertButton
+/// A boolean State variable is required in order to present the view.
 @available(iOS 14.0, *)
-struct CustomAlertButton: View {
+public struct CustomAlert: View {
     
-    let bgColor: Color
-    let fontColor: Color
-    let title: LocalizedStringKey
-    var action: (() -> Void)? = nil
+    /// Flag used to dismiss the alert on the presenting view
+    @Binding var presentAlert: Bool
     
-    var body: some View {
-        Button {
-            action?()
+    /// The alert type being shown
+    @State var alertType: AlertType = .success
+    
+    /// based on this value alert buttons will show vertically
+    var isShowVerticalButtons = false
+    
+    var leftButtonAction: (() -> ())?
+    var rightButtonAction: (() -> ())?
+    
+    let verticalButtonsHeight: CGFloat = 80
+    
+    public init(presentAlert: Binding<Bool>, alertType: AlertType, isShowVerticalButtons: Bool = false, leftButtonAction: ( () -> Void)? = nil, rightButtonAction: ( () -> Void)? = nil) {
+        self._presentAlert = presentAlert
+        self.alertType = alertType
+        self.isShowVerticalButtons = isShowVerticalButtons
+        self.leftButtonAction = leftButtonAction
+        self.rightButtonAction = rightButtonAction
+    }
+    
+    public var body: some View {
+        
+        ZStack {
             
-        } label: {
-            Text(title)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 14)), foregroundStyle: fontColor)
-                .padding(.horizontal, .init(width: 10))
-        }
-        .frame(width: .init(width: 130), height: .init(height: 40))
-        .background(bgColor)
-        .cornerRadius(.init(height: 20))
-    }
-}
-
-
-//MARK: - CustomAlertModifier
-@available(iOS 14.0, *)
-struct CustomAlertModifier {
-    
-    @Binding private var isPresented: Bool
-    
-    private let bgColor: Color
-    private let fontColor: Color
-    private let title: String
-    private let message: String
-    private let dismissButton: CustomAlertButton?
-    private let primaryButton: CustomAlertButton?
-    private let secondaryButton: CustomAlertButton?
-}
-
-@available(iOS 14.0, *)
-extension CustomAlertModifier: ViewModifier {
-    
-    func body(content: Content) -> some View {
-        content
-            .fullScreenCover(isPresented: $isPresented) {
-                ZStack{
-                    Color.black.opacity(0.1).edgesIgnoringSafeArea(.all)
-                    CustomAlertView(bgColor: bgColor, fontColor: fontColor, title: title, message: message, dismissButton: dismissButton, primaryButton: primaryButton, secondaryButton: secondaryButton)
-                }
-                .ignoresSafeArea(.all)
-                .background(BackgroundCleanerView())
-            }
-            .ignoresSafeArea(.all)
-    }
-}
-
-@available(iOS 14.0, *)
-extension CustomAlertModifier {
-    
-    init(bgColor: Color = Color.blue, fontColor: Color = Color.white, title: String = "", message: String = "", dismissButton: CustomAlertButton, isPresented: Binding<Bool>) {
-        self.bgColor = bgColor
-        self.fontColor = fontColor
-        self.title = title
-        self.message = message
-        self.dismissButton = dismissButton
-        
-        self.primaryButton = nil
-        self.secondaryButton = nil
-        
-        _isPresented = isPresented
-    }
-    
-    init(bgColor: Color = Color.blue, fontColor: Color = Color.white, title: String = "", message: String = "", primaryButton: CustomAlertButton, secondaryButton: CustomAlertButton, isPresented: Binding<Bool>) {
-        self.bgColor = bgColor
-        self.fontColor = fontColor
-        self.title = title
-        self.message = message
-        self.primaryButton = primaryButton
-        self.secondaryButton = secondaryButton
-        
-        self.dismissButton = nil
-        
-        _isPresented = isPresented
-    }
-}
-
-//MARK: - Extension
-@available(iOS 14.0, *)
-extension View {
-    
-    func alert(bgColor: Color = Color.gray, fontColor: Color = Color.white, title: String = "", message: String = "", dismissButton: CustomAlertButton = CustomAlertButton(bgColor: .gray, fontColor: .white, title: "Ok"), isPresented: Binding<Bool>) -> some View {
-        let title = NSLocalizedString(title, comment: "")
-        let message = NSLocalizedString(message, comment: "")
-        
-        return modifier(CustomAlertModifier(bgColor: bgColor, fontColor: fontColor, title: title, message: message, dismissButton: dismissButton, isPresented: isPresented))
-    }
-    
-    func alert(bgColor: Color = .gray, fontColor: Color = .white, title: String = "", message: String = "", primaryButton: CustomAlertButton, secondaryButton: CustomAlertButton, isPresented: Binding<Bool>) -> some View {
-        let title = NSLocalizedString(title, comment: "")
-        let message = NSLocalizedString(message, comment: "")
-        
-        return modifier(CustomAlertModifier(bgColor: bgColor, fontColor: fontColor, title: title, message: message, primaryButton: primaryButton, secondaryButton: secondaryButton, isPresented: isPresented))
-    }
-}
-
-/// `Alert`
-@available(iOS 14.0, *)
-struct DemoView: View {
-    
-    @State private var isAlertPresented = true
-    
-    var body: some View {
-        ZStack {
-            Button {
-                isAlertPresented = true
+            // faded background
+            Color.black.opacity(0.75)
+                .edgesIgnoringSafeArea(.all)
+            VStack(spacing: 0) {
                 
-            } label: {
-                Text("Alert test")
+                if alertType.title() != "" {
+                    
+                    // alert title
+                    Text(alertType.title())
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(.center)
+                        .frame(height: 25)
+                        .padding(.top, 16)
+                        .padding(.bottom, 8)
+                        .padding(.horizontal, 16)
+                }
+
+                // alert message
+                Text(alertType.message())
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .font(.system(size: 14))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 16)
+                    .minimumScaleFactor(0.5)
+                
+                Divider()
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0.5)
+                    .padding(.all, 0)
+                
+                if !isShowVerticalButtons {
+                    HStack(spacing: 0) {
+                        
+                        // left button
+                        if (!alertType.leftActionText.isEmpty) {
+                            Button {
+                                leftButtonAction?()
+                            } label: {
+                                Text(alertType.leftActionText)
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(.black)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
+                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                            }
+                            Divider()
+                                .frame(minWidth: 0, maxWidth: 0.5, minHeight: 0, maxHeight: .infinity)
+                        }
+                        
+                        // right button (default)
+                        Button {
+                            rightButtonAction?()
+                        } label: {
+                            Text(alertType.rightActionText)
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.pink)
+                                .multilineTextAlignment(.center)
+                                .padding(15)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        }
+                        
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 55)
+                    .padding([.horizontal, .bottom], 0)
+                    
+                } else {
+                    VStack(spacing: 0) {
+                        Spacer()
+                        Button {
+                            leftButtonAction?()
+                        } label: {
+                            Text(alertType.leftActionText)
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.black)
+                                .multilineTextAlignment(.center)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        }
+                        Spacer()
+                        
+                        Divider()
+                        
+                        Spacer()
+                        Button {
+                            rightButtonAction?()
+                        } label: {
+                            Text(alertType.rightActionText)
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.pink)
+                                .multilineTextAlignment(.center)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        }
+                        Spacer()
+                        
+                    }
+                    .frame(height: verticalButtonsHeight)
+                }
+                
             }
+            .frame(width: 270, height: alertType.height(isShowVerticalButtons: isShowVerticalButtons))
+            .background(
+                Color.white
+            )
+            .cornerRadius(4)
         }
-        .alert(title: "Message deleted successfully", message: "You won't able to undo this message beacuse of this mesaage already deleted without no issue . thank you.",
-               primaryButton: CustomAlertButton(bgColor: .blue, fontColor: .white, title: "Yes", action: { }),
-               secondaryButton: CustomAlertButton(bgColor: .gray, fontColor: .white, title: "No", action: {  }),
-               isPresented: $isAlertPresented)
-        
-        //        .alert(title: "Message deleted successfully", message: "You won't able to undo this message beacuse of this mesaage already deleted without no issue . thank you.",
-        //               dismissButton: CustomAlertButton(bgColor: .buttonOrangeColorEB7638, fontColor: .white, title: "Ok", action: {  }),
-        //               isPresented: $isAlertPresented)
+        .zIndex(2)
     }
 }
-
-//MARK: - Preview
-//#Preview {
-//    DemoView()
-//}
