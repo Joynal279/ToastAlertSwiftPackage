@@ -53,15 +53,6 @@ public enum AlertType {
         }
     }
     
-    func height() -> CGFloat {
-        switch self {
-        case .oneButton:
-            return .init(height: 197)
-        case .twoButton:
-            return .init(height: 197)
-        }
-    }
-    
 }
 
 /// A boolean State variable is required in order to present the view.
@@ -98,18 +89,18 @@ public struct CustomAlert: View {
                 
                 // alert title
                 Text(alertType.title())
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 18)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
-                    .frame(height: .init(height: 25))
+                    //.frame(height: .init(height: 25))
                     .padding(.top, .init(height: 16))
                     .padding(.bottom, .init(height: 8))
                     .padding(.horizontal, .init(width: 16))
                 
                 // alert message
                 Text(alertType.message())
-                    .lineLimit(4)
+                    .lineLimit(20)
                     .textVM(multiTextAlignment: .center, font: .poppins(.regular, size: .init(height: 14)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    //.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .padding(.horizontal, .init(width: 16))
                     .padding(.bottom, .init(height: 16))
                     .minimumScaleFactor(0.5)
@@ -161,7 +152,7 @@ public struct CustomAlert: View {
                 .padding([.horizontal, .bottom], 0)
                 
             }
-            .frame(width: .init(width: 349), height: alertType.height())
+            .frame(width: .init(width: 349))
             .background(
                 colorScheme == .light ? Color(hexString: "#F2F2F2") : Color(hexString: "#232323")
             )
