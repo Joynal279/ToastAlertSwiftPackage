@@ -167,5 +167,3 @@ CustomAlert(presentAlert: $presentAlert, alertType: .constant(.twoButton(title: 
         }
     }
 ```
-* http://twitter.com/acmacalister
-* http://austincherry.me
