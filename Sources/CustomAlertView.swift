@@ -12,19 +12,25 @@ import SwiftUI
 /// Alert type
 public enum AlertType {
     
-    case oneButton(title: String = "", message: String = "")
-    case twoButton(title: String = "", message: String = "")
+    case oneButton(title: String = "One button title", message: String = "One button description message")
+    case twoButton(title: String = "Two button title", message: String = "Two button description message")
     
     func title() -> String {
         switch self {
-        case .oneButton(title: let title, _), .twoButton(title: let title, _):
+        case .oneButton(title: let title, _):
+            return title
+            
+        case .twoButton(title: let title, _):
             return title
         }
     }
     
     func message() -> String {
         switch self {
-        case .oneButton(_, message: let message), .twoButton(_, message: let message):
+        case .oneButton(_, message: let message):
+            return message
+            
+        case .twoButton(_, message: let message):
             return message
         }
     }
@@ -91,18 +97,15 @@ public struct CustomAlert: View {
                 .edgesIgnoringSafeArea(.all)
             VStack(spacing: 0) {
                 
-                if alertType.title() != "" {
-                    
-                    // alert title
-                    Text(alertType.title())
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
-                        .frame(height: 25)
-                        .padding(.top, 16)
-                        .padding(.bottom, 8)
-                        .padding(.horizontal, 16)
-                }
+                // alert title
+                Text(alertType.title())
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
+                    .frame(height: 25)
+                    .padding(.top, 16)
+                    .padding(.bottom, 8)
+                    .padding(.horizontal, 16)
                 
                 // alert message
                 Text(alertType.message())
