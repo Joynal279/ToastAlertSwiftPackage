@@ -27,11 +27,10 @@ public struct CustomToastView: View {
                 VStack(alignment: .leading, spacing: .init(height: 5)) {
                     
                     Text(toastTitle)
-                        .textVM(multiTextAlignment: .leading, font: .poppins(.semiBold, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
+                        .textVM(multiTextAlignment: .leading, font: .poppins(.semiBold, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
                     
                     Text(toastMessage)
-                        .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: .init(height: 14)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
-                        .foregroundColor(Color.black.opacity(0.6))
+                        .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: .init(height: 14)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
                         .lineLimit(4)
                     
                 }//: end VStack
@@ -42,12 +41,12 @@ public struct CustomToastView: View {
                     onCancelTapped()
                 } label: {
                     Image(systemName: "xmark")
-                        .foregroundColor(colorScheme == .light ? Color.black : Color.white)
+                        .foregroundColor(colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
                 }
             }
             .padding()
         }
-        .background(BackgroundBlurView())
+        .background(colorScheme == .light ? Color(hexString: "#F2F2F2") : Color(hexString: "#232323"))
         .overlay(
             Rectangle()
                 .fill(toastType.themeColor)
