@@ -74,16 +74,16 @@ public struct CustomAlert: View {
     @Binding var presentAlert: Bool
     
     /// The alert type being shown
-    @State var alertType: AlertType = .oneButton(title: "", message: "")
+    @Binding var alertType: AlertType
     
     var leftButtonAction: (() -> ())?
     var rightButtonAction: (() -> ())?
     
     let verticalButtonsHeight: CGFloat = 80
     
-    public init(presentAlert: Binding<Bool>, alertType: AlertType, isShowVerticalButtons: Bool = false, leftButtonAction: ( () -> Void)? = nil, rightButtonAction: ( () -> Void)? = nil) {
+    public init(presentAlert: Binding<Bool>, alertType: Binding<AlertType>, isShowVerticalButtons: Bool = false, leftButtonAction: ( () -> Void)? = nil, rightButtonAction: ( () -> Void)? = nil) {
         self._presentAlert = presentAlert
-        self.alertType = alertType
+        self._alertType = alertType
         self.leftButtonAction = leftButtonAction
         self.rightButtonAction = rightButtonAction
     }
