@@ -90,7 +90,7 @@ public struct CustomAlert: View {
                 // alert title
                 Text(alertType.title())
                     .lineLimit(2)
-                    .textVM(multiTextAlignment: .center, font: .poppins(.semiBold, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
+                    .textVM(multiTextAlignment: .center, font: .poppins(.semiBold, size: .init(height: 18)), foregroundStyle: colorScheme == .light ? Color(hexString: "#232323") : Color(hexString: "#F2F2F2"))
                     //.frame(height: .init(height: 25))
                     .padding(.top, .init(height: 18))
                     .padding(.bottom, .init(height: 12))
