@@ -16,7 +16,7 @@ public struct CustomToastView: View {
     public let toastTitle: String
     public let toastMessage: String
     public let onCancelTapped: (() -> Void)
-    
+        
     @available(iOS 14.0, *)
     public var body: some View {
         VStack(alignment: .leading) {
@@ -73,6 +73,12 @@ struct ToastView: Equatable {
     var message: String
     var duration: Double = 3
     var yOffset: Double = -30
+    
+    public init(type: CustomToastStyle, title: String, message: String) {
+        self.type = type
+        self.title = title
+        self.message = message
+    }
 }
 
 //MARK: - Enum
