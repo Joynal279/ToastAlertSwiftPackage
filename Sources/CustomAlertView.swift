@@ -100,6 +100,7 @@ public struct CustomAlert: View {
                 
                 // alert title
                 Text(alertType.title())
+                    .lineLimit(2)
                     .textVM(multiTextAlignment: .center, font: .poppins(.semiBold, size: .init(height: 16)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
                     .frame(height: .init(height: 25))
                     .padding(.top, .init(height: 16))
@@ -108,6 +109,7 @@ public struct CustomAlert: View {
                 
                 // alert message
                 Text(alertType.message())
+                    .lineLimit(4)
                     .textVM(multiTextAlignment: .center, font: .poppins(.regular, size: .init(height: 14)), foregroundStyle: colorScheme == .light ? Color.black : Color.white)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .padding(.horizontal, .init(width: 16))
@@ -161,7 +163,7 @@ public struct CustomAlert: View {
                 .padding([.horizontal, .bottom], 0)
                 
             }
-            .frame(width: .init(height: 270), height: alertType.height())
+            //.frame(width: .init(height: 270), height: alertType.height())
             .background(
                 colorScheme == .light ? Color.white : Color.black
             )
