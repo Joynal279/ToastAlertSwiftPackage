@@ -11,11 +11,11 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct CustomToastView: View {
     
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
-    var toastType: CustomToastStyle
-    var toastTitle: String
-    var toastMessage: String
-    var onCancelTapped: (() -> Void)
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    public var toastType: CustomToastStyle
+    public var toastTitle: String
+    public var toastMessage: String
+    public var onCancelTapped: (() -> Void)
     
     @available(iOS 14.0, *)
     public var body: some View {
@@ -77,7 +77,7 @@ struct ToastView: Equatable {
 
 //MARK: - Enum
 @available(iOS 14.0, *)
-enum CustomToastStyle {
+public enum CustomToastStyle {
     case error
     case warning
     case success
