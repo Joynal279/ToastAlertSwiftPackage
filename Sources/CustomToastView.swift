@@ -76,10 +76,10 @@ struct CustomToastView: View {
 @available(iOS 14.0, *)
 public struct ToastView: Equatable {
     var type: CustomToastStyle
-    public var title: String
-    public var message: String
-    public var duration: Double = 3
-    public var yOffset: Double = -30
+    var title: String
+    var message: String
+    var duration: Double = 3
+    var yOffset: Double = -30
 }
 
 //MARK: - Enum
@@ -92,7 +92,7 @@ public enum CustomToastStyle {
 }
 
 @available(iOS 14.0, *)
-extension CustomToastStyle {
+public extension CustomToastStyle {
     var themeColor: Color {
         switch self {
         case .error:
@@ -117,11 +117,11 @@ extension CustomToastStyle {
 
 //MARK: - Custom Toast Modifier
 @available(iOS 14.0, *)
-struct CustomToastModifier: ViewModifier {
-    @Binding var toast: ToastView?
+public struct CustomToastModifier: ViewModifier {
+    @Binding public var toast: ToastView?
     @State private var workItem: DispatchWorkItem?
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay(
