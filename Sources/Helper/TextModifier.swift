@@ -32,7 +32,7 @@ extension View {
     func textVM(
         multiTextAlignment: TextAlignment,
         font: Font,
-        foregroundColor: Color,
+        foregroundStyle: Color,
         lineLimit: Int = 0
         
     ) -> some View {
@@ -40,7 +40,7 @@ extension View {
         modifier(TextModifier(
             multiTextAlignment: multiTextAlignment,
             font: font,
-            foregroundColor: foregroundColor,
+            foregroundColor: foregroundStyle,
             lineLimit: lineLimit
         ))
         
