@@ -78,6 +78,8 @@ public struct ToastView: Equatable {
         self.type = type
         self.title = title
         self.message = message
+        
+        PoppinsFont.registerFonts()
     }
 }
 
