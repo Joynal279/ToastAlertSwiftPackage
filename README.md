@@ -15,7 +15,7 @@ Once you have your Swift package set up, adding ToastAlert as a dependency is as
 
 ```swift
 Language: SwiftUI
-iOS Version: 14.0
+iOS Version: 14.0 or later
 dependencies: [
     .package(url: "https://github.com/Joynal279/ToastAlertSwiftPackage.git")
 ]
