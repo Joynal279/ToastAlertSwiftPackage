@@ -163,7 +163,7 @@ public struct CustomAlert: View {
             }
             .frame(width: .init(height: 270), height: alertType.height())
             .background(
-                BackgroundBlurView()
+                colorScheme == .light ? Color.white : Color.black
             )
             .cornerRadius(.init(height: 10))
         }
