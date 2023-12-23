@@ -53,12 +53,12 @@ public enum AlertType {
         }
     }
     
-    func height(isShowVerticalButtons: Bool = false) -> CGFloat {
+    func height() -> CGFloat {
         switch self {
         case .success:
-            return isShowVerticalButtons ? 220 : 150
+            return 150
         case .error(_, _):
-            return isShowVerticalButtons ? 220 : 150
+            return 150
         }
     }
 }
@@ -73,9 +73,6 @@ public struct CustomAlert: View {
     /// The alert type being shown
     @State var alertType: AlertType = .success
     
-    /// based on this value alert buttons will show vertically
-    var isShowVerticalButtons = false
-    
     var leftButtonAction: (() -> ())?
     var rightButtonAction: (() -> ())?
     
@@ -84,7 +81,6 @@ public struct CustomAlert: View {
     public init(presentAlert: Binding<Bool>, alertType: AlertType, isShowVerticalButtons: Bool = false, leftButtonAction: ( () -> Void)? = nil, rightButtonAction: ( () -> Void)? = nil) {
         self._presentAlert = presentAlert
         self.alertType = alertType
-        self.isShowVerticalButtons = isShowVerticalButtons
         self.leftButtonAction = leftButtonAction
         self.rightButtonAction = rightButtonAction
     }
@@ -125,7 +121,6 @@ public struct CustomAlert: View {
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0.5)
                     .padding(.all, 0)
                 
-                if !isShowVerticalButtons {
                     HStack(spacing: 0) {
                         
                         // left button
@@ -159,41 +154,9 @@ public struct CustomAlert: View {
                     }
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 55)
                     .padding([.horizontal, .bottom], 0)
-                    
-                } else {
-                    VStack(spacing: 0) {
-                        Spacer()
-                        Button {
-                            leftButtonAction?()
-                        } label: {
-                            Text(alertType.leftActionText)
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.black)
-                                .multilineTextAlignment(.center)
-                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                        }
-                        Spacer()
-                        
-                        Divider()
-                        
-                        Spacer()
-                        Button {
-                            rightButtonAction?()
-                        } label: {
-                            Text(alertType.rightActionText)
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.pink)
-                                .multilineTextAlignment(.center)
-                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                        }
-                        Spacer()
-                        
-                    }
-                    .frame(height: verticalButtonsHeight)
-                }
                 
             }
-            .frame(width: 270, height: alertType.height(isShowVerticalButtons: isShowVerticalButtons))
+            .frame(width: 270, height: alertType.height())
             .background(
                 Color.white
             )
