@@ -9,7 +9,7 @@ import SwiftUI
 
 //MARK: - Custom Toast View
 @available(iOS 14.0, *)
-struct CustomToastView: View {
+public struct CustomToastView: View {
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     var toastType: CustomToastStyle
@@ -17,12 +17,12 @@ struct CustomToastView: View {
     var toastMessage: String
     //var onCancelTapped: (() -> Void)
     
-    public init(toastType: CustomToastStyle, toastTitle: String, toastMessage: String){
-        self.toastType = toastType
-        self.toastTitle = toastTitle
-        self.toastMessage = toastMessage
-        PoppinsFont.registerFonts()
-    }
+//    public init(toastType: CustomToastStyle, toastTitle: String, toastMessage: String){
+//        self.toastType = toastType
+//        self.toastTitle = toastTitle
+//        self.toastMessage = toastMessage
+//        PoppinsFont.registerFonts()
+//    }
     
     @available(iOS 14.0, *)
     public var body: some View {
