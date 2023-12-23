@@ -27,7 +27,7 @@ public struct CustomToastView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     
                     Text(toastTitle)
-                        .textVM(multiTextAlignment: .leading, font: .poppins(.semiBold, size: 16), foregroundColor: colorScheme == .light ? Color.black : Color.white)
+                        .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: 16), foregroundColor: colorScheme == .light ? Color.black : Color.white)
                     
                     Text(toastMessage)
                         .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: 14), foregroundColor: colorScheme == .light ? Color.black : Color.white)
