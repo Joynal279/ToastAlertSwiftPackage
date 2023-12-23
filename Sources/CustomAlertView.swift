@@ -9,7 +9,7 @@ import SwiftUI
 
 //MARK: - CustomAlertView
 @available(iOS 14.0, *)
-public struct CustomAlertView: View {
+struct CustomAlertView: View {
     
     let bgColor: Color
     let fontColor: Color
@@ -21,7 +21,7 @@ public struct CustomAlertView: View {
     
     @Environment(\.presentationMode) private var dismiss
     
-    public var body: some View {
+    var body: some View {
         ZStack {
             alertView
         }
@@ -29,7 +29,7 @@ public struct CustomAlertView: View {
     }
     
     // MARK: Private
-    var alertView: some View {
+    private var alertView: some View {
         VStack(spacing: .init(height: 20)) {
             titleView
             messageView
@@ -43,7 +43,7 @@ public struct CustomAlertView: View {
     }
     
     @ViewBuilder
-    var titleView: some View {
+    private var titleView: some View {
         if !title.isEmpty {
             Text(title)
                 .textVM(multiTextAlignment: .center, font: .poppins(.medium, size: .init(height: 18)), foregroundStyle: Color.black)
@@ -52,7 +52,7 @@ public struct CustomAlertView: View {
     }
     
     @ViewBuilder
-    var messageView: some View {
+    private var messageView: some View {
         if !message.isEmpty {
             Text(message)
                 .textVM(multiTextAlignment: .center, font: .poppins(.regular, size: .init(height: 16)), foregroundStyle: Color.gray)
@@ -61,7 +61,7 @@ public struct CustomAlertView: View {
         }
     }
     
-    var buttonsView: some View {
+    private var buttonsView: some View {
         HStack(spacing: 12) {
             if dismissButton != nil {
                 dismissButtonView
@@ -75,7 +75,7 @@ public struct CustomAlertView: View {
     }
     
     @ViewBuilder
-    var primaryButtonView: some View {
+    private var primaryButtonView: some View {
         if let button = primaryButton {
             CustomAlertButton(bgColor: button.bgColor, fontColor: button.fontColor, title: button.title) {
                 button.action?()
@@ -85,7 +85,7 @@ public struct CustomAlertView: View {
     }
     
     @ViewBuilder
-    var secondaryButtonView: some View {
+    private var secondaryButtonView: some View {
         if let button = secondaryButton {
             CustomAlertButton(bgColor: button.bgColor, fontColor: button.fontColor, title: button.title) {
                 button.action?()
@@ -95,7 +95,7 @@ public struct CustomAlertView: View {
     }
     
     @ViewBuilder
-    var dismissButtonView: some View {
+    private var dismissButtonView: some View {
         if let button = dismissButton {
             CustomAlertButton(bgColor: button.bgColor, fontColor: button.fontColor, title: button.title) {
                 button.action?()
@@ -109,14 +109,14 @@ public struct CustomAlertView: View {
 
 //MARK: - CustomAlertButton
 @available(iOS 14.0, *)
-public struct CustomAlertButton: View {
+struct CustomAlertButton: View {
     
     let bgColor: Color
     let fontColor: Color
     let title: LocalizedStringKey
     var action: (() -> Void)? = nil
     
-    public var body: some View {
+    var body: some View {
         Button {
             action?()
             
