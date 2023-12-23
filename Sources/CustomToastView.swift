@@ -55,7 +55,7 @@ public struct CustomToastView: View {
         .overlay(
             Rectangle()
                 .fill(toastType.themeColor)
-                .frame(width: 6)
+                .frame(width: toastTitle.isEmpty || toastMessage.isEmpty ? 2 : 6)
                 .clipped()
             , alignment: .leading
         )
