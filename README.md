@@ -91,6 +91,11 @@ toast = ToastView(type: .info, title: "Info", message: "This is info message", d
 toast = ToastView(type: .warning, title: "Warning", message: "This is warning message", duration: 3.0)
 ```
 
+### Show toast without title and set yOffset
+```swift
+toast = ToastView(type: .success, title: "", message: "This is warning message", duration: 3.0, yOffset: -50)
+```
+
 ### Write code for Alert Message
 
 Once imported ToastAlertSwiftPackage, now you can write code for `alert` message
