@@ -15,7 +15,7 @@ Once you have your Swift package set up, adding ToastAlert as a dependency is as
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/daltoniam/Starscream.git", from: "4.0.0")
+    .package(url: "https://github.com/Joynal279/ToastAlertSwiftPackage.git")
 ]
 ```
 
