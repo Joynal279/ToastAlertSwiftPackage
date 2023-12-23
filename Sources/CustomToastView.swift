@@ -74,10 +74,12 @@ public struct ToastView: Equatable {
     var duration: Double = 3
     var yOffset: Double = -30
     
-    public init(type: CustomToastStyle, title: String, message: String) {
+    public init(type: CustomToastStyle, title: String, message: String, duration: Double = 3.0, yOffset: Double = -30.0) {
         self.type = type
         self.title = title
         self.message = message
+        self.duration = duration
+        self.yOffset = yOffset
         
         PoppinsFont.registerFonts()
     }
