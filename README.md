@@ -69,7 +69,7 @@ Here you can show toast message 4 way. There are 5 parameter where you can modif
 2. title
 3. message
 4. duration
-5. yOffset
+5. yOffset ///Default set -30
 
 ### Show Success toast
 ```swift
