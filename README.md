@@ -29,9 +29,12 @@ import ToastAlertSwiftPackage
 
 ### Write code for Toast Message
 
-Once imported package, now you can write code for toast message
+Once imported ToastAlertSwiftPackage, now you can write code for toast message
 
 ```swift
+import SwiftUI
+import ToastAlertSwiftPackage
+
 //MARK: - ContentView
 struct ContentView: View {
     
@@ -86,7 +89,81 @@ toast = ToastView(type: .info, title: "Info", message: "This is info message", d
 toast = ToastView(type: .warning, title: "Warning", message: "This is warning message", duration: 3.0)
 ```
 
+### Write code for Alert Message
 
+Once imported ToastAlertSwiftPackage, now you can write code for `alert` message
 
+```swift
+import SwiftUI
+import ToastAlertSwiftPackage
+
+//MARK: - ContentView
+struct ContentView: View {
+    
+    /// `Properties`
+    @State private var presentAlert: Bool = false
+    
+    var body: some View {
+        ZStack {
+            VStack {
+                
+                Button("Show Alert") { /// `Alert button`
+                    presentAlert = true
+                }
+                .buttonStyle(.borderedProminent)
+                
+            }//: end VStack
+            .padding()
+            
+            /// `Present Alert`
+            if presentAlert{
+                //CustomAlert(presentAlert: $presentAlert, alertType: .constant(.oneButton(title: "Do you want to delete?", message: "If you delete this file then you won’t please again check everything"))){ withAnimation{  presentAlert.toggle() }
+                //} rightButtonAction: { withAnimation{ presentAlert.toggle() } }
+                
+                CustomAlert(presentAlert: $presentAlert, alertType: .constant(.twoButton(title: "Do you want to delete?", message: "If you delete this file then you won’t please again check everything"))){
+                    withAnimation{
+                        presentAlert.toggle()
+                    }
+                } rightButtonAction: {
+                    withAnimation{
+                        presentAlert.toggle()
+                    }
+                }
+            }//: End present alert
+        }
+        
+    }
+}
+```
+
+Here you can show alert message 2 way. There are 2 parameter where you can modify each others:
+1. title
+2. message
+
+### Show one button alert
+```swift
+CustomAlert(presentAlert: $presentAlert, alertType: .constant(.oneButton(title: "Do you want to delete?", message: "If you delete this file then you won’t please again check everything"))){
+    withAnimation{
+        presentAlert.toggle()
+    }
+    } rightButtonAction: {
+        withAnimation{
+    presentAlert.toggle()
+        }
+    }
+```
+
+### Show two button alert
+```swift
+CustomAlert(presentAlert: $presentAlert, alertType: .constant(.twoButton(title: "Do you want to delete?", message: "If you delete this file then you won’t please again check everything"))){
+    withAnimation{
+        presentAlert.toggle()
+    }
+    } rightButtonAction: {
+        withAnimation{
+    presentAlert.toggle()
+        }
+    }
+```
 * http://twitter.com/acmacalister
 * http://austincherry.me
