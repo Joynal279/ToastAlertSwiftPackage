@@ -12,10 +12,10 @@ import SwiftUI
 public struct CustomToastView: View {
     
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
-    public var toastType: CustomToastStyle
-    public var toastTitle: String
-    public var toastMessage: String
-    public var onCancelTapped: (() -> Void)
+    public let toastType: CustomToastStyle
+    public let toastTitle: String
+    public let toastMessage: String
+    public let onCancelTapped: (() -> Void)
     
     @available(iOS 14.0, *)
     public var body: some View {
