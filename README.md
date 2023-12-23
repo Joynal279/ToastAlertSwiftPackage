@@ -14,6 +14,8 @@ The [Swift Package Manager](https://swift.org/package-manager/) is a tool for au
 Once you have your Swift package set up, adding ToastAlert as a dependency is as easy as adding it to the `dependencies` value of your `Package.swift`.
 
 ```swift
+Language: SwiftUI
+iOS Version: 14.0
 dependencies: [
     .package(url: "https://github.com/Joynal279/ToastAlertSwiftPackage.git")
 ]
