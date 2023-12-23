@@ -11,10 +11,10 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct CustomToastView: View {
     
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
-    var toastType: CustomToastStyle
-    var toastTitle: String
-    var toastMessage: String
+    @Environment(\.colorScheme) public var colorScheme: ColorScheme
+    public var toastType: CustomToastStyle
+    public var toastTitle: String
+    public var toastMessage: String
     //var onCancelTapped: (() -> Void)
     
 //    public init(toastType: CustomToastStyle, toastTitle: String, toastMessage: String){
@@ -75,11 +75,11 @@ public struct CustomToastView: View {
 //MARK: - Enum Model
 @available(iOS 14.0, *)
 public struct ToastView: Equatable {
-    var type: CustomToastStyle
-    var title: String
-    var message: String
-    var duration: Double = 3
-    var yOffset: Double = -30
+    public var type: CustomToastStyle
+    public var title: String
+    public var message: String
+    public var duration: Double = 3
+    public var yOffset: Double = -30
 }
 
 //MARK: - Enum
@@ -119,7 +119,7 @@ public extension CustomToastStyle {
 @available(iOS 14.0, *)
 public struct CustomToastModifier: ViewModifier {
     @Binding public var toast: ToastView?
-    @State private var workItem: DispatchWorkItem?
+    @State public var workItem: DispatchWorkItem?
     
     public func body(content: Content) -> some View {
         content
@@ -135,7 +135,7 @@ public struct CustomToastModifier: ViewModifier {
             }
     }
     
-    @ViewBuilder func mainToastView() -> some View {
+    @ViewBuilder public func mainToastView() -> some View {
         if let toast = toast {
             VStack {
                 Spacer()
@@ -148,7 +148,7 @@ public struct CustomToastModifier: ViewModifier {
         }
     }
     
-    private func showToast() {
+    public func showToast() {
         guard let toast = toast else { return }
         
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -165,7 +165,7 @@ public struct CustomToastModifier: ViewModifier {
         }
     }
     
-    private func dismissToast() {
+    public func dismissToast() {
         withAnimation {
             toast = nil
         }
@@ -196,8 +196,9 @@ public extension View {
 //}
 
 //MARK: - BackgroundBlurView
-struct BackgroundBlurView: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIView {
+@available(iOS 14.0, *)
+public struct BackgroundBlurView: UIViewRepresentable {
+    public func makeUIView(context: Context) -> UIView {
         let view = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         DispatchQueue.main.async {
             view.superview?.superview?.backgroundColor = .clear
@@ -205,5 +206,5 @@ struct BackgroundBlurView: UIViewRepresentable {
         return view
     }
     
-    func updateUIView(_ uiView: UIView, context: Context) {}
+    public func updateUIView(_ uiView: UIView, context: Context) {}
 }
