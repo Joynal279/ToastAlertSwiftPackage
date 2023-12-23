@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var toast: CustomToast? = nil
+    @State var toast: ToastView? = nil
     
     var body: some View {
         ZStack(content: {
@@ -17,7 +17,7 @@ struct ContentView: View {
                 Text("ShowToast")
             }
             .onTapGesture {
-                toast = CustomToast(type: .success, title: "Success", message: "This is success message", duration: 3.0)
+                toast = ToastView(type: .success, title: "Success", message: "This is success message", duration: 3.0)
                 //toast = CustomToast(type: .error, title: "Error", message: "This is error message", duration: 5.0)
                 //toast = CustomToast(type: .info, title: "Info", message: "This is info message", duration: 3.0)
                 //toast = CustomToast(type: .warning, title: "Warning", message: "This is warning message")

@@ -24,36 +24,25 @@ public struct CustomToastView: View {
                 Image(systemName: toastType.iconFileName)
                     .foregroundColor(toastType.themeColor)
                 
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading, spacing: .init(height: 5)) {
                     
                     Text(toastTitle)
-                        .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: 16), foregroundColor: colorScheme == .light ? Color.black : Color.white)
+                        .textVM(multiTextAlignment: .leading, font: .poppins(.semiBold, size: .init(height: 16)), foregroundColor: colorScheme == .light ? Color.black : Color.white)
                     
                     Text(toastMessage)
-                        .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: 14), foregroundColor: colorScheme == .light ? Color.black : Color.white)
+                        .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: .init(height: 14)), foregroundColor: colorScheme == .light ? Color.black : Color.white)
                         .foregroundColor(Color.black.opacity(0.6))
                         .lineLimit(4)
-//                    
-//                    Text(toastTitle)
-//                        .multilineTextAlignment(.leading)
-//                        .lineLimit(1)
-//                        .font(.poppins(.bold, size: 16))
-//                        .foregroundColor(colorScheme == .light ? Color.black : Color.white)
-//                    
-//                    Text(toastMessage)
-//                        .multilineTextAlignment(.leading)
-//                        .font(.custom("", fixedSize: 14))
-//                        .foregroundColor(colorScheme == .light ? Color.black.opacity(0.6) : Color.white.opacity(0.6))
-//                        .lineLimit(4)
+                    
                 }//: end VStack
                 
-                Spacer(minLength: 10)
+                Spacer(minLength: .init(height: 10))
                 
                 Button { /// dismiss button
                     onCancelTapped()
                 } label: {
                     Image(systemName: "xmark")
-                        .foregroundColor(.black)
+                        .foregroundColor(colorScheme == .light ? Color.black : Color.white)
                 }
             }
             .padding()
@@ -67,9 +56,9 @@ public struct CustomToastView: View {
             , alignment: .leading
         )
         .frame(minWidth: 0, maxWidth: .infinity)
-        .cornerRadius(10)
+        .cornerRadius(.init(height: 10))
         .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 1)
-        .padding(.horizontal, 20)
+        .padding(.horizontal, .init(width: 20))
     }
     
 }
@@ -208,17 +197,4 @@ public extension View {
 //        CustomToastView(toastType: .warning, toastTitle: "Warning", toastMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ") {}
 //    }
 //}
-
-//MARK: - BackgroundBlurView
-struct BackgroundBlurView: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIView {
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        DispatchQueue.main.async {
-            view.superview?.superview?.backgroundColor = .clear
-        }
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIView, context: Context) {}
-}
 
