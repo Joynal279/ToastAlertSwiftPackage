@@ -25,23 +25,32 @@ public struct CustomToastView: View {
                     .foregroundColor(toastType.themeColor)
                 
                 VStack(alignment: .leading, spacing: 5) {
+                    
                     Text(toastTitle)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(1)
-                        .font(.poppins(.bold, size: 16))
-                        .foregroundColor(colorScheme == .light ? Color.black : Color.white)
+                        .textVM(multiTextAlignment: .leading, font: .poppins(.semiBold, size: 16), foregroundColor: colorScheme == .light ? Color.black : Color.white)
                     
                     Text(toastMessage)
-                        .multilineTextAlignment(.leading)
-                        .font(.custom("", fixedSize: 14))
-                        .foregroundColor(colorScheme == .light ? Color.black.opacity(0.6) : Color.white.opacity(0.6))
+                        .textVM(multiTextAlignment: .leading, font: .poppins(.regular, size: 14), foregroundColor: colorScheme == .light ? Color.black : Color.white)
+                        .foregroundColor(Color.black.opacity(0.6))
                         .lineLimit(4)
+//                    
+//                    Text(toastTitle)
+//                        .multilineTextAlignment(.leading)
+//                        .lineLimit(1)
+//                        .font(.poppins(.bold, size: 16))
+//                        .foregroundColor(colorScheme == .light ? Color.black : Color.white)
+//                    
+//                    Text(toastMessage)
+//                        .multilineTextAlignment(.leading)
+//                        .font(.custom("", fixedSize: 14))
+//                        .foregroundColor(colorScheme == .light ? Color.black.opacity(0.6) : Color.white.opacity(0.6))
+//                        .lineLimit(4)
                 }//: end VStack
                 
                 Spacer(minLength: 10)
                 
                 Button { /// dismiss button
-                    //onCancelTapped()
+                    onCancelTapped()
                 } label: {
                     Image(systemName: "xmark")
                         .foregroundColor(.black)
@@ -212,3 +221,44 @@ struct BackgroundBlurView: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
+
+///Text `modifier`
+@available(iOS 14.0, *)
+struct TextModifier: ViewModifier {
+    
+    let multiTextAlignment: TextAlignment
+    let font: Font
+    let foregroundColor: Color
+    let lineLimit: Int
+    
+    func body(content: Content) -> some View {
+        content
+            .multilineTextAlignment(multiTextAlignment)
+            .font(font)
+            .foregroundColor(foregroundColor)
+            .lineLimit(lineLimit)
+    }
+}
+
+///View extension
+@available(iOS 14.0, *)
+extension View {
+    
+    func textVM(
+        multiTextAlignment: TextAlignment,
+        font: Font,
+        foregroundColor: Color,
+        lineLimit: Int = 0
+        
+    ) -> some View {
+        
+        modifier(TextModifier(
+            multiTextAlignment: multiTextAlignment,
+            font: font,
+            foregroundColor: foregroundColor,
+            lineLimit: lineLimit
+        ))
+        
+    }
+}
+
