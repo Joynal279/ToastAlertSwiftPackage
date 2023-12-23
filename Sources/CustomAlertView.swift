@@ -1,6 +1,6 @@
 //
 //  SwiftUIView.swift
-//  
+//
 //
 //  Created by Joynal Abedin on 23/12/23.
 //
@@ -12,23 +12,19 @@ import SwiftUI
 /// Alert type
 public enum AlertType {
     
-    case success
-    case error(title: String, message: String = "")
+    case oneButton(title: String = "", message: String = "")
+    case twoButton(title: String = "", message: String = "")
     
     func title() -> String {
         switch self {
-        case .success:
-            return "Success"
-        case .error(title: let title, _):
+        case .oneButton(title: let title, _), .twoButton(title: let title, _):
             return title
         }
     }
-
+    
     func message() -> String {
         switch self {
-        case .success:
-            return "Please confirm that you're still open to session requests"
-        case .error(_, message: let message):
+        case .oneButton(_, message: let message), .twoButton(_, message: let message):
             return message
         }
     }
@@ -36,31 +32,32 @@ public enum AlertType {
     /// Left button action text for the alert view
     var leftActionText: String {
         switch self {
-        case .success:
-            return "Go"
-        case .error(_, _):
-            return "Go"
+        case .oneButton:
+            return "OK"
+        case .twoButton:
+            return "Cancel"
         }
     }
     
     /// Right button action text for the alert view
     var rightActionText: String {
         switch self {
-        case .success:
-            return "Cancel"
-        case .error(_, _):
-            return "Cancel"
+        case .oneButton:
+            return "OK"
+        case .twoButton:
+            return "Yes"
         }
     }
     
     func height() -> CGFloat {
         switch self {
-        case .success:
+        case .oneButton:
             return 150
-        case .error(_, _):
+        case .twoButton:
             return 150
         }
     }
+    
 }
 
 /// A boolean State variable is required in order to present the view.
@@ -71,7 +68,7 @@ public struct CustomAlert: View {
     @Binding var presentAlert: Bool
     
     /// The alert type being shown
-    @State var alertType: AlertType = .success
+    @State var alertType: AlertType = .oneButton(title: "", message: "")
     
     var leftButtonAction: (() -> ())?
     var rightButtonAction: (() -> ())?
@@ -106,7 +103,7 @@ public struct CustomAlert: View {
                         .padding(.bottom, 8)
                         .padding(.horizontal, 16)
                 }
-
+                
                 // alert message
                 Text(alertType.message())
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -121,23 +118,36 @@ public struct CustomAlert: View {
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0.5)
                     .padding(.all, 0)
                 
-                    HStack(spacing: 0) {
-                        
+                HStack(spacing: 0) {
+                    
+                    switch alertType {
+                    case .oneButton:
                         // left button
-                        if (!alertType.leftActionText.isEmpty) {
-                            Button {
-                                leftButtonAction?()
-                            } label: {
-                                Text(alertType.leftActionText)
-                                    .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(.black)
-                                    .multilineTextAlignment(.center)
-                                    .padding()
-                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                            }
-                            Divider()
-                                .frame(minWidth: 0, maxWidth: 0.5, minHeight: 0, maxHeight: .infinity)
+                        Button {
+                            leftButtonAction?()
+                        } label: {
+                            Text(alertType.leftActionText)
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.black)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         }
+                        
+                    case .twoButton:
+                        // left button
+                        Button {
+                            leftButtonAction?()
+                        } label: {
+                            Text(alertType.leftActionText)
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.black)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        }
+                        Divider()
+                            .frame(minWidth: 0, maxWidth: 0.5, minHeight: 0, maxHeight: .infinity)
                         
                         // right button (default)
                         Button {
@@ -150,10 +160,11 @@ public struct CustomAlert: View {
                                 .padding(15)
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         }
-                        
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 55)
-                    .padding([.horizontal, .bottom], 0)
+                    
+                }
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 55)
+                .padding([.horizontal, .bottom], 0)
                 
             }
             .frame(width: 270, height: alertType.height())
