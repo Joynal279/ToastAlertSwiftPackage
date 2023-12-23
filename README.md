@@ -1,4 +1,4 @@
-![Toast And Alert@3x](https://github.com/Joynal279/ToastAlertSwiftPackage/assets/44470728/26094757-8f42-4500-847a-798ba3720d86)
+![Toast And Alert](https://github.com/Joynal279/ToastAlertSwiftPackage/assets/44470728/8d49e3db-417a-4775-989e-bc86adfb363a)
 
 
 
